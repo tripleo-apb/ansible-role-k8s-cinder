@@ -1,0 +1,16 @@
+galaxy_info:
+  author: Kiran Thyagaraja
+  description: Role to deploy OpenStack Cinder in Kubernetes/OpenShift
+  company:
+  license: GPL v3
+  min_ansible_version: 1.9
+ platforms:
+  - name: EL
+    versions:
+    - all
+  galaxy_tags:
+    - cinder
+    - openstack
+dependencies:
+  - { role: tripleo-apb.ansible-role-k8s-mariadb }
+  - { role: tripleo-apb.ansible-role-k8s-rabbitmq }

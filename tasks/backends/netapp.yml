@@ -1,20 +1,37 @@
-- name: Create cinder-scheduler configmaps
+- name: Generate shares.conf file
+  config_template:
+    src: netapp/shares.conf.j2
+    dest: /tmp/shares.conf
+    config_type: ini
+
+- name: Read configs into memory
+  slurp:
+    src: "/tmp/shares.conf"
+  register: "shares_conf"
+
+- name: Create cinder-volume-netapp configmaps
   ignore_errors: yes
   k8s_v1_config_map:
-    name: cinder-scheduler
+    name: cinder-volume-netapp
     namespace: "{{ namespace }}"
     state: present
     debug: yes
     labels:
-      service: cinder-scheduler
+      service: cinder-volume-netapp
     data:
       config.json: |
         {
-            "command": "cinder-scheduler --config-file /var/lib/kolla/config_files/cinder.conf",
+            "command": "/usr/bin/cinder-volume --config-file /usr/share/cinder/cinder-dist.conf --config-file /etc/cinder/cinder.conf",
             "config_files": [
                 {
                     "source": "/var/lib/kolla/config_files/cinder.conf",
                     "dest": "/etc/cinder/cinder.conf",
+                    "owner": "cinder",
+                    "perm": "0600"
+                },
+                {
+                    "source": "/var/lib/kolla/config_files/shares.conf",
+                    "dest": "/etc/cinder/shares.conf",
                     "owner": "cinder",
                     "perm": "0600"
                 }
@@ -36,21 +53,27 @@
       cinder.conf: |
         {{cinder_conf['content'] | b64decode}}
 
-- name: create cinder-scheduler deployment
+      shares.conf: |
+        {{shares_conf['content'] | b64decode}}
+
+- name: Create Cinder Volume Deployment
   openshift_v1_deployment_config:
-    name: cinder-scheduler
+    name: cinder-volume-netapp
     namespace: "{{ namespace }}"
     service_account_name: "{{ service_account }}"
     labels:
-      app: cinder-scheduler
-      service: cinder-scheduler
+      app: cinder-volume-netapp
+      service: cinder-volume-netapp
     replicas: 1
     spec_template_metadata_labels:
-      app: cinder-scheduler
-      service: cinder-scheduler
+      app: cinder-volume-netapp
+      service: cinder-volume-netapp
     containers:
-    - name: cinder-scheduler
-      image: tripleoupstream/centos-binary-cinder-scheduler:latest
+    - name: cinder-volume
+      image: tripleoupstream/centos-binary-cinder-volume:latest
+      volumeMounts:
+        - name: kolla-config
+          mountPath: /var/lib/kolla/config_files/
       env:
         - name: TZ
           value: UTC
@@ -58,11 +81,8 @@
           value: COPY_ALWAYS
         - name: KOLLA_KUBERNETES
           value: ""
-      volume_mounts:
-        - name: kolla-config
-          mountPath: /var/lib/kolla/config_files/
     volumes:
       - name: kolla-config
         config_map:
-          name: cinder-scheduler
+          name: cinder-volume-netapp
 
