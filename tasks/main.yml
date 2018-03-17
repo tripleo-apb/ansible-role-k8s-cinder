@@ -1,2 +1,2 @@
 ---
-# tasks file for ansible-role-k8s-cinder/
+- include: "{{ action }}.yml"

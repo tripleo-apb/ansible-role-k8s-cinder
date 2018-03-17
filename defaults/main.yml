@@ -1,2 +1,70 @@
 ---
-# defaults file for ansible-role-k8s-cinder/
+coe_host: "https://127.0.0.1:8443"
+kube_context: 
+config_file: 
+action: provision
+namespace: openstack
+service_account: cinder
+privileged_service_account: cinder-privileged
+
+mariadb_root_user: root
+mariadb_root_password: weakpassword
+
+cinder_user: cinder
+cinder_password: cinderpassword
+
+rabbimq_user: guest
+rabbitmq_password: rabbitmqpassword
+
+auth_strategy: noauth
+
+cinder_config:
+  DEFAULT:
+    public_bind_host: "0.0.0.0"
+  database:
+    connection: "mysql+pymysql://root:weakpassword@mariadb:3306/cinder"
+
+cinder_rbd_user_name: cinder
+role_name: cinder
+
+# Backends
+# Array to remember enabled backends. 
+enabled_backends: []
+
+#
+cinder_enable_iscsi_backend: false
+cinder_enable_rbd_backend: false
+cinder_enable_xtremio_backend: false
+cinder_enable_netapp_backend: false
+#
+# Xtremio
+xtremio:
+    max_over_subscription_ratio: 40
+    use_multipath_for_image_xfer: true
+    volume_backend_name: xtremio
+    volume_driver: cinder.volume.drivers.emc.xtremio.XtremIOISCSIDriver
+    san_ip: 
+    xtremio_cluster_name:
+    san_login: 
+    san_password:
+    image_volume_cache_enabled:
+#
+# Ceph
+ceph:
+    cinder_rbd_pool_name: cinder_volumes
+    cinder_rbd_user_name: cinder
+    client_key: 
+    ceph_authentication_type: cephx
+    ceph_mon_host: 
+
+# Netapp
+netapp:
+    volume_driver: cinder.volume.drivers.netapp.common.NetAppDriver
+    netapp_storage_family: ontap_cluster
+    netapp_storage_protocol: 
+    nfs_shares_config: /etc/cinder/shares.conf 
+    nfs_shares: 
+    netapp_server_hostname:
+    netapp_server_port: 
+    netapp_login: 
+    netapp_password: 
