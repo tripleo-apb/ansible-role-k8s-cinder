@@ -31,14 +31,13 @@ role_name: cinder
 # Array to remember enabled backends. 
 enabled_backends: []
 
-#
-cinder_enable_iscsi_backend: false
-cinder_enable_rbd_backend: false
-cinder_enable_xtremio_backend: false
-cinder_enable_netapp_backend: false
+iscsi:
+    enabled: false
+
 #
 # Xtremio
 xtremio:
+    enabled: false
     max_over_subscription_ratio: 40
     use_multipath_for_image_xfer: true
     volume_backend_name: xtremio
@@ -51,6 +50,7 @@ xtremio:
 #
 # Ceph
 ceph:
+    enabled: false
     cinder_rbd_pool_name: cinder_volumes
     cinder_rbd_user_name: cinder
     client_key: 
@@ -59,6 +59,7 @@ ceph:
 
 # Netapp
 netapp:
+    enabled: false
     volume_driver: cinder.volume.drivers.netapp.common.NetAppDriver
     netapp_storage_family: ontap_cluster
     netapp_storage_protocol: 

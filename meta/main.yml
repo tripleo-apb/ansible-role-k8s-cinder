@@ -4,7 +4,7 @@ galaxy_info:
   company:
   license: GPL v3
   min_ansible_version: 1.9
- platforms:
+  platforms:
   - name: EL
     versions:
     - all
@@ -12,5 +12,5 @@ galaxy_info:
     - cinder
     - openstack
 dependencies:
-  - { role: tripleo-apb.ansible-role-k8s-mariadb }
-  - { role: tripleo-apb.ansible-role-k8s-rabbitmq }
+#  - { role: tripleo-apb.ansible-role-k8s-mariadb }
+#  - { role: tripleo-apb.ansible-role-k8s-rabbitmq }

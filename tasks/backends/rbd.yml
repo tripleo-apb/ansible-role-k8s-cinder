@@ -77,7 +77,7 @@
         {{keyring['content'] | b64decode}}
 
 - name: Create Cinder Volume Deployment
-  openshift_v1_deployment_config:
+  k8s_apps_v1beta1_deployment:
     name: cinder-volume-ceph
     namespace: "{{ namespace }}"
     service_account_name: "{{ service_account }}"

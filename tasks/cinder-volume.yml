@@ -2,10 +2,10 @@
 # backend configmap to its corresponding cinder-volume pod
 
 - include: backends/iscsi.yml
-  when: cinder_enable_iscsi_backend
+  when: iscsi.enabled
 - include: backends/rbd.yml
-  when: cinder_enable_rbd_backend
+  when: ceph.enabled
 - include: backends/xtremio.yml
-  when: cinder_enable_xtremio_backend
+  when: xtremio.enabled
 - include: backends/netapp.yml
-  when: cinder_enable_netapp_backend
+  when: netapp.enabled

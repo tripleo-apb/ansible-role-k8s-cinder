@@ -4,7 +4,7 @@ config_files:
   dest: "/etc/cinder/cinder.conf"
   owner: cinder
   perm: '0600'
-{% if cinder_enable_rbd_backend %}
+{% if ceph.enabled %}
 - source: "/var/lib/kolla/config_files/ceph.conf"
   dest: "/etc/ceph/ceph.conf"
   owner: root
@@ -14,7 +14,7 @@ config_files:
   owner: root
   perm: '0644'
 {% endif %}
-{% if cinder_enable_iscsi_backend %}
+{% if iscsi.enabled %}
 - source: "/var/lib/kolla/config_files/lvm.conf"
   dest: "/etc/lvm/lvm.conf"
   owner: root

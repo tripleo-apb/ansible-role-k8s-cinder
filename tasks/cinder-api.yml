@@ -76,7 +76,7 @@
         target_port: 8776
 
 - name: Create Cinder-api Deployment
-  openshift_v1_deployment_config:
+  k8s_apps_v1beta1_deployment:
     name: cinder-api
     namespace: "{{ namespace }}"
     service_account_name: "{{ service_account }}"
