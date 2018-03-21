@@ -1,3 +1,4 @@
+---
 # Upload and create pod specific configmap
 - name: Upload config files
   config_template:

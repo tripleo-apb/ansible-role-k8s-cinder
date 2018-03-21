@@ -1,3 +1,4 @@
+---
 - name: Generate config files
   config_template:
     src: rbd/ceph.conf.j2

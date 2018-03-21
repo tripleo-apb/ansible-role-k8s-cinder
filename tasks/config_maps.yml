@@ -1,3 +1,4 @@
+---
 - name: Generate cinder.conf
   config_template:
     src: cinder.conf.j2

@@ -1,3 +1,4 @@
+---
 - name: Create Cinder Database
   k8s_v1_job:
     name: cinder-create-db

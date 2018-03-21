@@ -1,3 +1,4 @@
+---
 galaxy_info:
   author: Kiran Thyagaraja
   description: Role to deploy OpenStack Cinder in Kubernetes/OpenShift

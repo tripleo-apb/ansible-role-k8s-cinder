@@ -1,3 +1,4 @@
+---
 - name: Generate shares.conf file
   config_template:
     src: netapp/shares.conf.j2

@@ -1,3 +1,4 @@
+---
 - name: Upload config files
   config_template:
     src: "{{item}}"

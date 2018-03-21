@@ -21,8 +21,6 @@ auth_strategy: noauth
 cinder_config:
   DEFAULT:
     public_bind_host: "0.0.0.0"
-  database:
-    connection: "mysql+pymysql://root:weakpassword@mariadb:3306/cinder"
 
 cinder_rbd_user_name: cinder
 role_name: cinder
