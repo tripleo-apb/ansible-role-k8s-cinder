@@ -1,10 +1,9 @@
 # Upload and create pod specific configmap
 - name: Upload config files
-  template:
+  config_template:
     src: "{{item}}"
     dest: /tmp/{{item}}
-    backup: yes
-    mode: 0644
+    config_type: ini
   with_items:
     - cinder-wsgi.conf
 

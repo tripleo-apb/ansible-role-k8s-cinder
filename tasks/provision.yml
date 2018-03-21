@@ -2,9 +2,10 @@
 - include: enabled_backends.yml
 
 - name: Generate config files
-  template:
+  config_template:
     src: cinder.conf.j2
     dest: /tmp/cinder.conf
+    config_type: ini
 
 - name: Read configs into memory
   slurp:
